@@ -1,4 +1,4 @@
-java
+
 class ListNode {
     int val;
     ListNode next;
