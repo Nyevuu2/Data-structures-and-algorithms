@@ -1,4 +1,4 @@
-
+java
 class ListNode {
     int val;
     ListNode next;
@@ -9,36 +9,23 @@ class ListNode {
 }
 
 public class Solution {
-    public ListNode detectCycle(ListNode head) {
+    public boolean hasCycle(ListNode head) {
         if (head == null || head.next == null) {
-            return null;
+            return false;
         }
 
         ListNode slow = head;
-        ListNode fast = head;
+        ListNode fast = head.next;
 
-        // Detect cycle
         while (fast != null && fast.next != null) {
+            if (slow == fast) {
+                return true;
+            }
             slow = slow.next;
             fast = fast.next.next;
-            if (slow == fast) {
-                break; // Cycle detected
-            }
         }
 
-        // No cycle
-        if (fast == null || fast.next == null) {
-            return null;
-        }
-
-        // Find the starting point of the cycle
-        slow = head;
-        while (slow != fast) {
-            slow = slow.next;
-            fast = fast.next;
-        }
-
-        return slow;
+        return false;
     }
 
     public static void main(String[] args) {
@@ -51,11 +38,6 @@ public class Solution {
         head.next.next.next = new ListNode(-4);
         head.next.next.next.next = head.next; // Creating a cycle from the last node to the second node
 
-        ListNode cycleStart = solution.detectCycle(head);
-        if (cycleStart != null) {
-            System.out.println("Cycle starts at node with value: " + cycleStart.val);
-        } else {
-            System.out.println("No cycle detected.");
-        }
-    }
+        System.out.println(solution.hasCycle(head)); // Output should be true since the linked list has a cycle
+    }
 }
